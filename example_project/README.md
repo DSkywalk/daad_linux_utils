@@ -19,3 +19,5 @@ This code example is an blank DSF file from: https://github.com/daad-adventure-w
         },
         "workbench.colorTheme": "Outrun Electric",
     }
+
+Do you want learn more? https://medium.com/@uto_dev/a-daad-tutorial-for-beginners-1-b2568ec4df05
