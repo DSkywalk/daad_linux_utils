@@ -21,26 +21,32 @@ class Preprocessor(object):
     def __init__(self, file, output):
         self.fout = codecs.open(output, 'w', CHAR_CODE)
         self.data = codecs.open(file, 'r', CHAR_CODE).read()
-        self.data = self._clean_file(self.data)
-        
+        self.data = self._prepare_file(self.data)
+
         self.process_func = getattr(self, self.MODE_BASE)
         print("PRE-PROCESSING:", file, "to", output)
 
         self.process_include()
         self.process_tokens()
 
-        #remove last \n
+        # remove last \n added while processing
         self.fout.seek(-1, os.SEEK_CUR)
         self.fout.truncate()
         self.fout.close()
-        
-    def _clean_file(self, filedata):
+
+    def _prepare_file(self, filedata):
+        """Prepare files to process"""
+
         # clean windows line-breaks
         tmp = re.sub(r'\r\n','\n', filedata)
-        
+
         return tmp.split('\n')
 
     def get_mode(self, token):
+        """Get section token to active new modes"""
+
+        # we want to ignore any /NUMBER,
+        # cause is an enumerator do not start a new section
         if token[0].isdigit():
             return False
 
@@ -51,41 +57,55 @@ class Preprocessor(object):
 
         return True
 
+    def pr_default(self, line):
+        """Base process, just add current line with \n """
+
+        self.fout.write(line + '\n')
+
     def pr_ltx(self, line):
+        """LTX process, converts \n to #n"""
+
         if not len(line) or line[-1] == '"' or line[0] == ';':
             self.fout.write(line + '\n')
         else:
             self.fout.write(line + '#n')
 
-    def pr_default(self, line):
-        self.fout.write(line + '\n')
-
     def process_tokens(self):
+        """Process tokens for each MODE"""
+
         for line in self.data:
+            # check special case to force just add new line and continue
             if len(line) and line[0] == '/' and self.get_mode(line[1:4]):
                 self.pr_default(line)
+
                 continue
-            
+
             self.process_func(line)
 
     def process_include(self):
+        """Process #include property"""
+
         newdata = []
+
         for line in self.data:
             if len(line) and line[0:8] == '#include':
                 filepath = line[8:].strip().replace('"', '')
                 tmp = codecs.open(filepath, 'r', CHAR_CODE).read()
-                tmp = self._clean_file(tmp)
+                tmp = self._prepare_file(tmp)
                 newdata += tmp
+
             else:
                 newdata.append(line)
+
         self.data = newdata
  
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(description=f"pre-process dsf files - v{__version__}")
     parser.add_argument('file', type=str, help='original file to preprocess')
     parser.add_argument('-o', '--output-path', required=True, help='destination file-path')
  
     args = parser.parse_args()
+
     if not os.path.exists(args.file):
         exit("Please specify a valid file using the --file= parameter.")
 
