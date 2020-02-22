@@ -1,6 +1,6 @@
 # daad utils
 
-Some utils writen in python for daad/dsf. Also includes my linux DEVKIT to build AMSTRAD CPC Adventures :+1:
+Some utils writen in python for [daad/dsf](https://github.com/daad-adventure-writer). Also includes my linux [DEVKIT](https://github.com/DSkywalk/daad_utils/devkit) to build AMSTRAD CPC Adventures :+1:
 
 # predrf
 
