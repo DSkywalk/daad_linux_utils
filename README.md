@@ -12,9 +12,9 @@ Usage:
 
 ## new include token
 
-You can add #include in your main DSF file to import another files into it.
+Now you can add **#include** to your DSF files so that the contents of that file are imported into your final DSF file.
 
-Example
+### Example
 
 *in main DSF file*
 
