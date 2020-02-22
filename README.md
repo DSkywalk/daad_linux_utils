@@ -12,7 +12,7 @@ Usage:
 
 ## new include token
 
-Now you can add **#include** to your DSF files so that the contents of that file are imported into your final DSF file.
+Now you can add **#include** to your DSF files so their the contents of the *included file* are imported into your final DSF file.
 
 ### Example
 
