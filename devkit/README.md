@@ -13,5 +13,6 @@ and finally to load the enviroment:
     
 you could add this build environment to Visual Code adding to your workspace settings:
 
-    "terminal.integrated.shellArgs.linux": ["--init-file", "path/to/your/devkit/activate.sh"],
-
+    {
+        "terminal.integrated.shellArgs.linux": ["--init-file", "path/to/your/devkit/activate.sh"],
+    }
