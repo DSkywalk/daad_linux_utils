@@ -1,0 +1,13 @@
+;--- Location Texts
+/LTX
+/0 "EMPTY DATABASE - DAAD V2
+- preprocess-mod - 
+
+"
+
+/1 "I'm at location number one.
+A road leads north."
+
+/2 "I'm at location number two.
+A road leads south."
+
