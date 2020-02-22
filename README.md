@@ -1,6 +1,6 @@
-# daad python utils
+# daad utils
 
-Some utils writen in python for daad/dsf
+Some utils writen in python for daad/dsf. Also includes my linux DEVKIT to build AMSTRAD CPC Adventures :+1:
 
 # predrf
 

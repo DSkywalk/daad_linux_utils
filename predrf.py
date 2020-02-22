@@ -17,6 +17,7 @@ class Preprocessor(object):
 
     MODE_BASE = "pr_default"
     process_func = None
+    in_string = 0
 
     def __init__(self, file, output):
         self.fout = codecs.open(output, 'w', CHAR_CODE)
@@ -64,8 +65,11 @@ class Preprocessor(object):
 
     def pr_ltx(self, line):
         """LTX process, converts \n to #n"""
-
-        if not len(line) or line[-1] == '"' or line[0] == ';':
+        if '"' in line:
+            self.in_string ^= 1
+        if self.in_string and not len(line):
+            self.fout.write('#n')
+        elif not len(line) or line[-1] == '"' or line[0] == ';':
             self.fout.write(line + '\n')
         else:
             self.fout.write(line + '#n')
